@@ -9,10 +9,13 @@ import {
   Alert,
 } from "react-native";
 import styles from "./RegisterStyle";
+import axiosConfig from "../../helpers/axios/axiosConfig";
+import type { NativeStackScreenProps } from "@react-navigation/native-stack";
+import { RootStackParamList } from "../../helpers/navigation/NavigationProps";
 
-import axiosConfig from "../../helpers/axiosConfig";
-
-export default function RegisterScreen({ navigation }) {
+export default function RegisterScreen({
+  navigation,
+}: NativeStackScreenProps<RootStackParamList>) {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -33,7 +36,6 @@ export default function RegisterScreen({ navigation }) {
       })
       .then((response) => {
         Alert.alert("User created! Please login.");
-        console.log(response.data);
         setName("");
         setEmail("");
         setPassword("");
@@ -44,7 +46,6 @@ export default function RegisterScreen({ navigation }) {
         navigation.navigate("Home");
       })
       .catch((error) => {
-        console.log(error.response);
         setError(error.response.data.message);
         setIsLoading(false);
       });
