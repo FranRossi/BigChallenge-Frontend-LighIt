@@ -6,6 +6,13 @@ const styles = StyleSheet.create({
     backgroundColor: "#1d9bf1",
     alignItems: "center",
   },
+  form: {
+    marginTop: 140,
+    width: 280,
+  },
+  error: {
+    color: "red",
+  },
   checkBoxRow: {
     flexDirection: "row",
     alignItems: "center",
@@ -21,7 +28,7 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     padding: 10,
   },
-  loginButton: {
+  registerButton: {
     flexDirection: "row",
     justifyContent: "center",
     alignItems: "center",
@@ -29,14 +36,20 @@ const styles = StyleSheet.create({
     padding: 12,
     borderRadius: 5,
   },
-  loginButtonText: {
+  registerButtonText: {
     color: "white",
+    fontSize: 16,
   },
-  registerText: {
-    fontSize: 12,
+  loginPageContainer: {
+    flexDirection: "row",
+    justifyContent: "center",
+    marginTop: 12,
   },
-  registerTextLink: {
-    fontSize: 12,
+  loginText: {
+    fontSize: 14,
+  },
+  loginTextLink: {
+    fontSize: 14,
     color: "white",
     textDecorationLine: "underline",
   },
@@ -49,6 +62,9 @@ const styles = StyleSheet.create({
 
   mt5: {
     marginTop: 22,
+  },
+  loadingIndicator: {
+    marginRight: 18,
   },
 });
 

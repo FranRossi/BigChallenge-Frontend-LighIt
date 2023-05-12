@@ -11,7 +11,8 @@ import {
 import styles from "./RegisterStyle";
 import axiosConfig from "../../helpers/axios/axiosConfig";
 import type { NativeStackScreenProps } from "@react-navigation/native-stack";
-import { RootStackParamList } from "../../helpers/navigation/NavigationProps";
+import { RootStackParamList } from "../../constants/navigation/NavigationProps";
+import { Roles } from "../../constants/roles/Roles";
 
 export default function RegisterScreen({
   navigation,
@@ -20,7 +21,7 @@ export default function RegisterScreen({
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-  const [role, setRole] = useState("PATIENT");
+  const [role, setRole] = useState<string>(Roles.PATIENT);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
 
@@ -34,13 +35,13 @@ export default function RegisterScreen({
         role,
         password_confirmation: confirmPassword,
       })
-      .then((response) => {
+      .then(() => {
         Alert.alert("User created! Please login.");
         setName("");
         setEmail("");
         setPassword("");
         setConfirmPassword("");
-        setRole("PATIENT");
+        setRole(Roles.PATIENT);
         setIsLoading(false);
         setError(null);
         navigation.navigate("Home");
@@ -53,9 +54,9 @@ export default function RegisterScreen({
 
   return (
     <View style={styles.container}>
-      <View style={{ marginTop: 130, width: 260 }}>
-        <View style={{ marginTop: 40 }}>
-          {error && <Text style={{ color: "red" }}>{error}</Text>}
+      <View style={styles.form}>
+        <View>
+          {error && <Text style={styles.error}>{error}</Text>}
           <TextInput
             style={[styles.inputBox, styles.mt4]}
             onChangeText={setName}
@@ -80,7 +81,7 @@ export default function RegisterScreen({
             placeholder="Password"
             placeholderTextColor="gray"
             autoCapitalize="none"
-            secureTextEntry={true}
+            secureTextEntry
           />
           <TextInput
             style={[styles.inputBox, styles.mt4]}
@@ -89,20 +90,20 @@ export default function RegisterScreen({
             placeholder="Confirm Password"
             placeholderTextColor="gray"
             autoCapitalize="none"
-            secureTextEntry={true}
+            secureTextEntry
           />
           <View style={styles.mt4}>
             <View style={styles.checkBoxRow}>
               <CheckBox
-                value={role === "PATIENT"}
-                onValueChange={() => setRole("PATIENT")}
+                value={role === Roles.PATIENT}
+                onValueChange={() => setRole(Roles.PATIENT)}
               />
               <Text style={styles.label}>Patient</Text>
             </View>
             <View style={styles.checkBoxRow}>
               <CheckBox
-                value={role === "DOCTOR"}
-                onValueChange={() => setRole("DOCTOR")}
+                value={role === Roles.DOCTOR}
+                onValueChange={() => setRole(Roles.DOCTOR)}
               />
               <Text style={styles.label}>Doctor</Text>
             </View>
@@ -111,27 +112,21 @@ export default function RegisterScreen({
 
         <TouchableOpacity
           onPress={() => register()}
-          style={[styles.loginButton, styles.mt5]}
+          style={[styles.registerButton, styles.mt5]}
         >
           {isLoading && (
             <ActivityIndicator
               size="small"
               color="white"
-              style={{ marginRight: 18 }}
+              style={styles.loadingIndicator}
             />
           )}
-          <Text style={styles.loginButtonText}>Register</Text>
+          <Text style={styles.registerButtonText}>Register</Text>
         </TouchableOpacity>
-        <View
-          style={{
-            flexDirection: "row",
-            justifyContent: "center",
-            marginTop: 12,
-          }}
-        >
-          <Text style={[styles.registerText]}>Already have an account?</Text>
+        <View style={styles.loginPageContainer}>
+          <Text style={[styles.loginText]}>Already have an account?</Text>
           <TouchableOpacity onPress={() => navigation.navigate("Home")}>
-            <Text style={styles.registerTextLink}> Login</Text>
+            <Text style={styles.loginTextLink}> Login</Text>
           </TouchableOpacity>
         </View>
       </View>
