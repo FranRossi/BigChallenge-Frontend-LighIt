@@ -4,8 +4,9 @@ import { StyleSheet } from "react-native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import HomeScreen from "./screens/Home/HomeScreen";
 import RegisterScreen from "./screens/Register/RegisterScreen";
+import type { RootStackParamList } from "./screens/helpers/navigation/NavigationProps";
 
-const Stack = createNativeStackNavigator();
+const Stack = createNativeStackNavigator<RootStackParamList>();
 
 export default function App() {
   return (
