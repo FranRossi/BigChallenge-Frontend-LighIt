@@ -7,28 +7,18 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   form: {
-    marginTop: 220,
+    marginTop: 280,
     width: 280,
   },
   error: {
     color: "red",
-  },
-  checkBoxRow: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between",
-    marginBottom: 10,
-    marginLeft: 5,
-  },
-  label: {
-    margin: 5,
   },
   inputBox: {
     backgroundColor: "white",
     borderRadius: 5,
     padding: 15,
   },
-  registerButton: {
+  loginButton: {
     flexDirection: "row",
     justifyContent: "center",
     alignItems: "center",
@@ -36,34 +26,30 @@ const styles = StyleSheet.create({
     padding: 12,
     borderRadius: 5,
   },
-  registerButtonText: {
+  loginButtonText: {
     color: "white",
     fontSize: 16,
   },
-  loginPageContainer: {
+  registerPageContainer: {
     flexDirection: "row",
     justifyContent: "center",
     marginTop: 12,
   },
-  loginText: {
+  registerText: {
     fontSize: 14,
   },
-  loginTextLink: {
+  registerTextLink: {
     fontSize: 14,
     color: "white",
     textDecorationLine: "underline",
   },
-  textAlignCenter: {
-    textAlign: "center",
-  },
   mt4: {
     marginTop: 16,
   },
-
   mt5: {
     marginTop: 22,
   },
-  loadingIndicator: {
+  activityIndicator: {
     marginRight: 18,
   },
 });
