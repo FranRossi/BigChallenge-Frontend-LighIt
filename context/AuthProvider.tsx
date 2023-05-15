@@ -73,15 +73,32 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       });
   };
 
+  const logout = () => {
+    setIsLoading(true);
+    axiosConfig
+      .post("/logout")
+      .then((response) => {
+        setError(null);
+      })
+      .catch((error) => {
+        console.log(error);
+        setError(error.response.data.message);
+      })
+      .finally(() => {
+        setUser(null);
+        setIsLoading(false);
+        SecureStore.deleteItemAsync("user");
+        setUserToken("");
+      });
+  };
+
   return (
     <AuthContext.Provider
       value={{
         user,
         setUser,
         login,
-        logout: () => {
-          setUser(null);
-        },
+        logout,
         error,
         isLoading,
       }}

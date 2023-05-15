@@ -8,6 +8,8 @@ import { useContext, useEffect, useState } from "react";
 import { AuthContext, AuthContextType } from "./context/AuthProvider";
 import { ActivityIndicator, View } from "react-native";
 import LoginScreen from "./screens/login/LoginScreen";
+import * as SecureStore from "expo-secure-store";
+import { setUserToken } from "./helpers/axios/axiosConfig";
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
@@ -43,9 +45,18 @@ export default function Root() {
   const { user, setUser } = useContext<AuthContextType>(AuthContext);
 
   useEffect(() => {
-    setTimeout(() => {
-      setIsLoading(false);
-    }, 2000);
+    SecureStore.getItemAsync("user")
+      .then((userString) => {
+        if (userString) {
+          const user = JSON.parse(userString);
+          setUser(user);
+          setUserToken(user.token);
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      })
+      .finally(() => setIsLoading(false));
   }, []);
 
   if (isLoading) {
