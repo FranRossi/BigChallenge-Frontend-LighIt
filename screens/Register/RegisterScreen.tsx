@@ -11,7 +11,7 @@ import {
 import styles from "./RegisterStyle";
 import axiosConfig from "../../helpers/axios/axiosConfig";
 import type { NativeStackScreenProps } from "@react-navigation/native-stack";
-import RootStackParamList from "../../constants/navigation/NavigationProps";
+import RootStackParamList from "../../constants/navigation/RootStackParamListProps";
 import { Roles } from "../../constants/roles/Roles";
 
 export default function RegisterScreen({

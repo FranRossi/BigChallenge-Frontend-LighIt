@@ -1,7 +1,7 @@
 import React from "react";
 import { Button, View } from "react-native";
 import type { NativeStackScreenProps } from "@react-navigation/native-stack";
-import RootStackParamList from "../../constants/navigation/NavigationProps";
+import RootStackParamList from "../../constants/navigation/RootStackParamListProps";
 
 export default function HomeScreen({
   navigation,
