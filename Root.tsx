@@ -10,6 +10,7 @@ import { ActivityIndicator, View } from "react-native";
 import LoginScreen from "./screens/login/LoginScreen";
 import * as SecureStore from "expo-secure-store";
 import { setUserToken } from "./helpers/axios/axiosConfig";
+import styles from "./RootStyle";
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
@@ -61,7 +62,7 @@ export default function Root() {
 
   if (isLoading) {
     return (
-      <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
+      <View style={styles.activityIndicatorContainer}>
         <ActivityIndicator size="large" color="#1d9bf1" />
       </View>
     );
