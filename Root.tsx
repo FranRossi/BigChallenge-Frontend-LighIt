@@ -1,43 +1,74 @@
 import "react-native-gesture-handler";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import {
+  DrawerContentScrollView,
+  DrawerItemList,
+  createDrawerNavigator,
+  DrawerContentComponentProps,
+} from "@react-navigation/drawer";
 import HomeScreen from "./screens/home/HomeScreen";
 import RegisterScreen from "./screens/register/RegisterScreen";
-import type RootStackParamList from "./constants/navigation/RootStackParamListProps";
+import type AuthStackParamList from "./constants/navigation/AuthStackParamListProps";
+import type HomeStackParamList from "./constants/navigation/HomeStackParamListProps";
+import type DrawerStackParamList from "./constants/navigation/DrawerParamListProps";
 import { useContext, useEffect, useState } from "react";
 import { AuthContext, AuthContextType } from "./context/AuthProvider";
-import { ActivityIndicator, View } from "react-native";
+import { ActivityIndicator, Text, TouchableOpacity, View } from "react-native";
 import LoginScreen from "./screens/login/LoginScreen";
 import * as SecureStore from "expo-secure-store";
 import { setUserToken } from "./helpers/axios/axiosConfig";
 import styles from "./RootStyle";
 
-const Stack = createNativeStackNavigator<RootStackParamList>();
+const HomeStack = createNativeStackNavigator<HomeStackParamList>();
+const AuthStack = createNativeStackNavigator<AuthStackParamList>();
+const Drawer = createDrawerNavigator<DrawerStackParamList>();
 
 const HomeStackNavigator = () => {
   return (
-    <Stack.Navigator>
-      <Stack.Screen name="Home" component={HomeScreen} />
-    </Stack.Navigator>
+    <HomeStack.Navigator screenOptions={{ headerShown: false }}>
+      <HomeStack.Screen name="Home" component={HomeScreen} />
+    </HomeStack.Navigator>
   );
 };
 
 const AuthStackNavigator = () => {
   return (
-    <Stack.Navigator
+    <AuthStack.Navigator
       screenOptions={{ headerShown: false, headerBackTitleVisible: false }}
     >
-      <Stack.Screen
+      <AuthStack.Screen
         name="Login"
         component={LoginScreen}
         options={{ headerShown: false }}
       />
-      <Stack.Screen
+      <AuthStack.Screen
         name="Register"
         component={RegisterScreen}
         options={{ headerShown: false }}
       />
-    </Stack.Navigator>
+    </AuthStack.Navigator>
+  );
+};
+
+const DrawerContent = (props: DrawerContentComponentProps) => {
+  const { logout, user } = useContext(AuthContext);
+
+  return (
+    <DrawerContentScrollView
+      contentContainerStyle={styles.contentContainer}
+      scrollEnabled={false}
+    >
+      <DrawerItemList {...props} />
+      <View style={styles.logoutContainer}>
+        <View style={styles.userNameAndLogoutView}>
+          <Text style={styles.userName}>{user?.name}</Text>
+          <TouchableOpacity onPress={logout}>
+            <Text style={styles.logout}>Logout</Text>
+          </TouchableOpacity>
+        </View>
+      </View>
+    </DrawerContentScrollView>
   );
 };
 
@@ -72,7 +103,17 @@ export default function Root() {
     <>
       {user ? (
         <NavigationContainer>
-          <HomeStackNavigator />
+          <Drawer.Navigator
+            initialRouteName="HomeStack"
+            drawerContent={(props) => <DrawerContent {...props} />}
+            screenOptions={{
+              drawerActiveBackgroundColor: "black",
+              drawerActiveTintColor: "white",
+              title: "Home",
+            }}
+          >
+            <Drawer.Screen name="HomeStack" component={HomeStackNavigator} />
+          </Drawer.Navigator>
         </NavigationContainer>
       ) : (
         <NavigationContainer>

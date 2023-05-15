@@ -7,13 +7,13 @@ import {
   ActivityIndicator,
   TouchableOpacity,
 } from "react-native";
-import RootStackParamList from "../../constants/navigation/RootStackParamListProps";
+import AuthStackParamList from "../../constants/navigation/AuthStackParamListProps";
 import { AuthContext } from "../../context/AuthProvider";
 import styles from "./LoginStyle";
 
 export default function LoginScreen({
   navigation,
-}: NativeStackScreenProps<RootStackParamList, "Login">) {
+}: NativeStackScreenProps<AuthStackParamList, "Login">) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const { login, error, isLoading } = useContext(AuthContext);
