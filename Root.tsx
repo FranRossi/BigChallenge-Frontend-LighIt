@@ -5,14 +5,38 @@ import HomeScreen from "./screens/home/HomeScreen";
 import RegisterScreen from "./screens/register/RegisterScreen";
 import type RootStackParamList from "./constants/navigation/RootStackParamListProps";
 import { useContext, useEffect, useState } from "react";
-import { AuthContext } from "./context/AuthProvider";
+import { AuthContext, AuthContextType } from "./context/AuthProvider";
 import { ActivityIndicator, Text, View } from "react-native";
+import LoginScreen from "./screens/login/LoginScreen";
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
+const HomeStackNavigator = () => {
+  return (
+    <Stack.Navigator>
+      <Stack.Screen name="Home" component={HomeScreen} />
+      <Stack.Screen name="Register" component={RegisterScreen} />
+    </Stack.Navigator>
+  );
+};
+
+const AuthStackNavigator = () => {
+  return (
+    <Stack.Navigator
+      screenOptions={{ headerShown: false, headerBackTitleVisible: false }}
+    >
+      <Stack.Screen
+        name="Login"
+        component={LoginScreen}
+        options={{ headerShown: false }}
+      />
+    </Stack.Navigator>
+  );
+};
+
 export default function Root() {
-  const [isLoading, setIsLoading] = useState(true);
-  const { user, setUser } = useContext(AuthContext);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
+  const { user, setUser } = useContext<AuthContextType>(AuthContext);
 
   useEffect(() => {
     setTimeout(() => {
@@ -32,17 +56,12 @@ export default function Root() {
     <>
       {user ? (
         <NavigationContainer>
-          <Stack.Navigator initialRouteName="Register">
-            <Stack.Screen name="Home" component={HomeScreen} />
-            <Stack.Screen name="Register" component={RegisterScreen} />
-          </Stack.Navigator>
+          <HomeStackNavigator />
         </NavigationContainer>
       ) : (
-        <View
-          style={{ flex: 1, alignItems: "center", justifyContent: "center" }}
-        >
-          <Text>Login Screen</Text>
-        </View>
+        <NavigationContainer>
+          <AuthStackNavigator />
+        </NavigationContainer>
       )}
     </>
   );
