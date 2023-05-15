@@ -59,13 +59,14 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         setUserToken(userResponse.token);
       })
       .catch((error) => {
-        console.log(error.response);
         let value = "";
-        if (error.response?.data.error.fields) {
-          const key = Object.keys(error.response?.data.error.fields)[0];
-          value = error.response?.data.error.fields[key];
+        if (error.response.data.errors) {
+          const errors = error.response.data.errors;
+          const firstErrorKey = Object.keys(errors)[0];
+          const firstErrorMessage = errors[firstErrorKey][0];
+          value = firstErrorMessage;
         }
-        const message = error.response?.data.error.message ?? value;
+        const message = error.response.data.error?.message ?? value;
         setError(message);
       })
       .finally(() => {
