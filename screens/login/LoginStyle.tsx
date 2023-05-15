@@ -6,8 +6,17 @@ const styles = StyleSheet.create({
     backgroundColor: "#1d9bf1",
     alignItems: "center",
   },
+  title: {
+    fontSize: 22,
+    fontWeight: "bold",
+    marginTop: 260,
+  },
+  subtitle: {
+    fontSize: 14,
+    marginTop: 8,
+  },
   form: {
-    marginTop: 280,
+    marginTop: 40,
     width: 280,
   },
   error: {

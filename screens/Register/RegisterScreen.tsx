@@ -54,6 +54,10 @@ export default function RegisterScreen({
 
   return (
     <View style={styles.container}>
+      <Text style={styles.title}>Welcome!</Text>
+      <Text style={styles.subtitle}>
+        Please fill out form to register into Health App
+      </Text>
       <View style={styles.form}>
         <View>
           {error && <Text style={styles.error}>{error}</Text>}
