@@ -1,6 +1,6 @@
 import React, { createContext, useState } from "react";
 import axiosConfig, { setUserToken } from "../helpers/axios/axiosConfig";
-import * as SecureStore from "expo-secure-store";
+//import * as SecureStore from "expo-secure-store";
 
 type LoginResponse = {
   token: string;
@@ -55,7 +55,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 
         setUser(userResponse);
         setError(null);
-        SecureStore.setItemAsync("user", JSON.stringify(userResponse));
+        //SecureStore.setItemAsync("user", JSON.stringify(userResponse));
         setUserToken(userResponse.token);
       })
       .catch((error) => {
