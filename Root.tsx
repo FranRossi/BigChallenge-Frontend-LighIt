@@ -101,8 +101,8 @@ export default function Root() {
 
   return (
     <>
-      {user ? (
-        <NavigationContainer>
+      <NavigationContainer>
+        {user ? (
           <Drawer.Navigator
             initialRouteName="HomeStack"
             drawerContent={(props) => <DrawerContent {...props} />}
@@ -114,12 +114,10 @@ export default function Root() {
           >
             <Drawer.Screen name="HomeStack" component={HomeStackNavigator} />
           </Drawer.Navigator>
-        </NavigationContainer>
-      ) : (
-        <NavigationContainer>
+        ) : (
           <AuthStackNavigator />
-        </NavigationContainer>
-      )}
+        )}
+      </NavigationContainer>
     </>
   );
 }

@@ -1,5 +1,5 @@
 import React, { createContext, useState } from "react";
-import axiosConfig, { setUserToken } from "../helpers/axios/axiosConfig";
+import axios, { setUserToken } from "../helpers/axios/axiosConfig";
 import * as SecureStore from "expo-secure-store";
 
 type LoginResponse = {
@@ -39,7 +39,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 
   const login = (email: string, password: string) => {
     setIsLoading(true);
-    axiosConfig
+    axios
       .post<LoginResponse>("/login", {
         email,
         password,
@@ -76,7 +76,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 
   const logout = () => {
     setIsLoading(true);
-    axiosConfig
+    axios
       .post("/logout")
       .then((response) => {
         setError(null);

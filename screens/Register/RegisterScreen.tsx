@@ -44,7 +44,7 @@ export default function RegisterScreen({
         setRole(Roles.PATIENT);
         setIsLoading(false);
         setError(null);
-        navigation.navigate("Home");
+        navigation.navigate("Login");
       })
       .catch((error) => {
         setError(error.response.data.message);
