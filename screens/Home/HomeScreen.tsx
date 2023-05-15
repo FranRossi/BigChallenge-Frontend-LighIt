@@ -1,11 +1,11 @@
 import React from "react";
 import { Button, View } from "react-native";
 import type { NativeStackScreenProps } from "@react-navigation/native-stack";
-import { RootStackParamList } from "../../constants/navigation/NavigationProps";
+import RootStackParamList from "../../constants/navigation/NavigationProps";
 
 export default function HomeScreen({
   navigation,
-}: NativeStackScreenProps<RootStackParamList>) {
+}: NativeStackScreenProps<RootStackParamList, "Home">) {
   return (
     <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
       <Button
