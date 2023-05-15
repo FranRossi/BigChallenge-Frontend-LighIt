@@ -11,12 +11,12 @@ import {
 import styles from "./RegisterStyle";
 import axiosConfig from "../../helpers/axios/axiosConfig";
 import type { NativeStackScreenProps } from "@react-navigation/native-stack";
-import RootStackParamList from "../../constants/navigation/RootStackParamListProps";
+import AuthStackParamList from "../../constants/navigation/AuthStackParamListProps";
 import { Roles } from "../../constants/roles/Roles";
 
 export default function RegisterScreen({
   navigation,
-}: NativeStackScreenProps<RootStackParamList, "Register">) {
+}: NativeStackScreenProps<AuthStackParamList, "Register">) {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -44,7 +44,7 @@ export default function RegisterScreen({
         setRole(Roles.PATIENT);
         setIsLoading(false);
         setError(null);
-        navigation.navigate("Home");
+        navigation.navigate("Login");
       })
       .catch((error) => {
         setError(error.response.data.message);
@@ -54,6 +54,10 @@ export default function RegisterScreen({
 
   return (
     <View style={styles.container}>
+      <Text style={styles.title}>Welcome!</Text>
+      <Text style={styles.subtitle}>
+        Please fill out form to register into Health App
+      </Text>
       <View style={styles.form}>
         <View>
           {error && <Text style={styles.error}>{error}</Text>}
@@ -125,7 +129,7 @@ export default function RegisterScreen({
         </TouchableOpacity>
         <View style={styles.loginPageContainer}>
           <Text style={[styles.loginText]}>Already have an account?</Text>
-          <TouchableOpacity onPress={() => navigation.navigate("Home")}>
+          <TouchableOpacity onPress={() => navigation.navigate("Login")}>
             <Text style={styles.loginTextLink}> Login</Text>
           </TouchableOpacity>
         </View>

@@ -1,17 +1,14 @@
 import React from "react";
-import { Button, View } from "react-native";
+import { Text, View } from "react-native";
 import type { NativeStackScreenProps } from "@react-navigation/native-stack";
-import RootStackParamList from "../../constants/navigation/RootStackParamListProps";
+import HomeStackParamList from "../../constants/navigation/HomeStackParamListProps";
 
 export default function HomeScreen({
   navigation,
-}: NativeStackScreenProps<RootStackParamList, "Home">) {
+}: NativeStackScreenProps<HomeStackParamList, "Home">) {
   return (
     <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
-      <Button
-        title="Go to Register"
-        onPress={() => navigation.navigate("Register")}
-      />
+      <Text>Home</Text>
     </View>
   );
 }
