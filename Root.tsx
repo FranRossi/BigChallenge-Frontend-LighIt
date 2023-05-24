@@ -20,6 +20,7 @@ import * as SecureStore from "expo-secure-store";
 import { setUserToken } from "./helpers/axios/axiosConfig";
 import styles from "./RootStyle";
 import UpdateInfoScreen from "./screens/updatePatientInfo/UpdateInfoScreen";
+import { Roles } from "./constants/roles/Roles";
 
 const HomeStack = createNativeStackNavigator<HomeStackParamList>();
 const AuthStack = createNativeStackNavigator<AuthStackParamList>();
@@ -75,10 +76,14 @@ const DrawerStackNavigator = () => {
 
 const DrawerContent = (props: DrawerContentComponentProps) => {
   const { logout, user } = useContext(AuthContext);
-  function updateInfoScreen() {
-    props.navigation.navigate("UpdateInfo");
-  }
 
+  function updateInfoScreen(role: string) {
+    return () => {
+      if (role === Roles.PATIENT) {
+        props.navigation.navigate("UpdateInfo");
+      }
+    };
+  }
   return (
     <DrawerContentScrollView
       contentContainerStyle={styles.contentContainer}
@@ -88,7 +93,7 @@ const DrawerContent = (props: DrawerContentComponentProps) => {
         <DrawerItemList {...props} />
       </View>
       <View style={styles.logoutContainer}>
-        <TouchableOpacity onPress={updateInfoScreen}>
+        <TouchableOpacity onPress={updateInfoScreen(user?.role ?? "")}>
           <View style={styles.userInitialView}>
             <Text style={styles.userInitial}>{user?.name[0]}</Text>
           </View>

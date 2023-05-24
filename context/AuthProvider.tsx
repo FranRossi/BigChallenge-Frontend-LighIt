@@ -12,6 +12,7 @@ export type User = {
   name: string;
   email: string;
   token: string;
+  role: string;
 };
 
 export type AuthContextType = {
@@ -51,6 +52,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
           id: response.data.data.id,
           name: response.data.data.name,
           email: response.data.data.email,
+          role: response.data.data.role,
         };
 
         setUser(userResponse);
