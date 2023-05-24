@@ -19,6 +19,7 @@ import LoginScreen from "./screens/login/LoginScreen";
 import * as SecureStore from "expo-secure-store";
 import { setUserToken } from "./helpers/axios/axiosConfig";
 import styles from "./RootStyle";
+import UpdateInfoScreen from "./screens/updatePatientInfo/UpdateInfoScreen";
 
 const HomeStack = createNativeStackNavigator<HomeStackParamList>();
 const AuthStack = createNativeStackNavigator<AuthStackParamList>();
@@ -28,6 +29,11 @@ const HomeStackNavigator = () => {
   return (
     <HomeStack.Navigator screenOptions={{ headerShown: false }}>
       <HomeStack.Screen name="Home" component={HomeScreen} />
+      <HomeStack.Screen
+        name="UpdateInfo"
+        component={UpdateInfoScreen}
+        options={{ headerShown: true, headerBackTitleVisible: false }}
+      />
     </HomeStack.Navigator>
   );
 };
@@ -51,20 +57,46 @@ const AuthStackNavigator = () => {
   );
 };
 
+const DrawerStackNavigator = () => {
+  return (
+    <Drawer.Navigator
+      initialRouteName="HomeStack"
+      drawerContent={(props) => <DrawerContent {...props} />}
+      screenOptions={{
+        drawerActiveBackgroundColor: "black",
+        drawerActiveTintColor: "white",
+        title: "Home",
+      }}
+    >
+      <Drawer.Screen name="HomeStack" component={HomeStackNavigator} />
+    </Drawer.Navigator>
+  );
+};
+
 const DrawerContent = (props: DrawerContentComponentProps) => {
   const { logout, user } = useContext(AuthContext);
+  function updateInfoScreen() {
+    props.navigation.navigate("UpdateInfo");
+  }
 
   return (
     <DrawerContentScrollView
       contentContainerStyle={styles.contentContainer}
       scrollEnabled={false}
     >
-      <DrawerItemList {...props} />
+      <View style={styles.drawerItemListContainer}>
+        <DrawerItemList {...props} />
+      </View>
       <View style={styles.logoutContainer}>
+        <TouchableOpacity onPress={updateInfoScreen}>
+          <View style={styles.userInitialView}>
+            <Text style={styles.userInitial}>{user?.name[0]}</Text>
+          </View>
+        </TouchableOpacity>
         <View style={styles.userNameAndLogoutView}>
           <Text style={styles.userName}>{user?.name}</Text>
           <TouchableOpacity onPress={logout}>
-            <Text style={styles.logout}>Logout</Text>
+            <Text style={styles.logoutText}>Sign out</Text>
           </TouchableOpacity>
         </View>
       </View>
@@ -102,21 +134,7 @@ export default function Root() {
   return (
     <>
       <NavigationContainer>
-        {user ? (
-          <Drawer.Navigator
-            initialRouteName="HomeStack"
-            drawerContent={(props) => <DrawerContent {...props} />}
-            screenOptions={{
-              drawerActiveBackgroundColor: "black",
-              drawerActiveTintColor: "white",
-              title: "Home",
-            }}
-          >
-            <Drawer.Screen name="HomeStack" component={HomeStackNavigator} />
-          </Drawer.Navigator>
-        ) : (
-          <AuthStackNavigator />
-        )}
+        {user ? <DrawerStackNavigator /> : <AuthStackNavigator />}
       </NavigationContainer>
     </>
   );
