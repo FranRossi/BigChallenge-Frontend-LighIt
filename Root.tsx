@@ -70,12 +70,11 @@ const DrawerContent = (props: DrawerContentComponentProps) => {
   const { logout, user } = useContext(AuthContext);
 
   function updateInfoScreen(role: string) {
-    return () => {
-      if (role === Roles.PATIENT) {
-        props.navigation.navigate("UpdateInfo");
-      }
-    };
+    if (role === Roles.PATIENT) {
+      props.navigation.navigate("UpdateInfo");
+    }
   }
+
   return (
     <DrawerContentScrollView
       contentContainerStyle={styles.contentContainer}
@@ -88,7 +87,7 @@ const DrawerContent = (props: DrawerContentComponentProps) => {
         />
       </View>
       <View style={styles.logoutContainer}>
-        <TouchableOpacity onPress={updateInfoScreen(user?.role ?? "")}>
+        <TouchableOpacity onPress={() => updateInfoScreen(user?.role ?? "")}>
           <View style={styles.userInitialView}>
             <Text style={styles.userInitial}>{user?.name[0]}</Text>
           </View>
