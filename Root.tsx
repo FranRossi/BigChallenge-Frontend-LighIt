@@ -10,7 +10,6 @@ import {
 import HomeScreen from "./screens/home/HomeScreen";
 import RegisterScreen from "./screens/register/RegisterScreen";
 import type AuthStackParamList from "./constants/navigation/AuthStackParamListProps";
-import type HomeStackParamList from "./constants/navigation/HomeStackParamListProps";
 import type DrawerStackParamList from "./constants/navigation/DrawerParamListProps";
 import { useContext, useEffect, useState } from "react";
 import { AuthContext, AuthContextType } from "./context/AuthProvider";
@@ -22,23 +21,33 @@ import styles from "./RootStyle";
 import UpdateInfoScreen from "./screens/updatePatientInfo/UpdateInfoScreen";
 import { Roles } from "./constants/roles/Roles";
 
-const HomeStack = createNativeStackNavigator<HomeStackParamList>();
 const AuthStack = createNativeStackNavigator<AuthStackParamList>();
 const Drawer = createDrawerNavigator<DrawerStackParamList>();
 
-const HomeStackNavigator = () => {
+const DrawerStackNavigator = () => {
   return (
-    <HomeStack.Navigator screenOptions={{ headerShown: false }}>
-      <HomeStack.Screen name="Home" component={HomeScreen} />
-      <HomeStack.Screen
+    <Drawer.Navigator
+      initialRouteName="Home"
+      drawerContent={(props) => <DrawerContent {...props} />}
+      screenOptions={{
+        drawerActiveBackgroundColor: "black",
+        drawerActiveTintColor: "white",
+        headerShown: true,
+      }}
+    >
+      <Drawer.Screen name="Home" component={HomeScreen} />
+      <Drawer.Screen
         name="UpdateInfo"
         component={UpdateInfoScreen}
-        options={{ headerShown: true, headerBackTitleVisible: false }}
+        options={{
+          headerShown: true,
+          headerTitle: "Update information",
+          title: "Update information",
+        }}
       />
-    </HomeStack.Navigator>
+    </Drawer.Navigator>
   );
 };
-
 const AuthStackNavigator = () => {
   return (
     <AuthStack.Navigator
@@ -55,22 +64,6 @@ const AuthStackNavigator = () => {
         options={{ headerShown: false }}
       />
     </AuthStack.Navigator>
-  );
-};
-
-const DrawerStackNavigator = () => {
-  return (
-    <Drawer.Navigator
-      initialRouteName="HomeStack"
-      drawerContent={(props) => <DrawerContent {...props} />}
-      screenOptions={{
-        drawerActiveBackgroundColor: "black",
-        drawerActiveTintColor: "white",
-        title: "Home",
-      }}
-    >
-      <Drawer.Screen name="HomeStack" component={HomeStackNavigator} />
-    </Drawer.Navigator>
   );
 };
 
@@ -137,10 +130,8 @@ export default function Root() {
   }
 
   return (
-    <>
-      <NavigationContainer>
-        {user ? <DrawerStackNavigator /> : <AuthStackNavigator />}
-      </NavigationContainer>
-    </>
+    <NavigationContainer>
+      {user ? <DrawerStackNavigator /> : <AuthStackNavigator />}
+    </NavigationContainer>
   );
 }

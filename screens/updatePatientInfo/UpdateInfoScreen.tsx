@@ -5,7 +5,7 @@ import styles from "./UpdateInfoStyle";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import axiosConfig from "../../helpers/axios/axiosConfig";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
-import HomeStackParamList from "../../constants/navigation/HomeStackParamListProps";
+import DrawerStackParamList from "../../constants/navigation/DrawerParamListProps";
 
 type FormData = {
   phone: string;
@@ -14,9 +14,10 @@ type FormData = {
   other_info: string;
 };
 
-export default function UpdateInfoScreen({
-  navigation,
-}: NativeStackScreenProps<HomeStackParamList, "UpdateInfo">) {
+interface Props
+  extends NativeStackScreenProps<DrawerStackParamList, "UpdateInfo"> {}
+
+export default function UpdateInfoScreen({ navigation }: Props) {
   const {
     handleSubmit,
     control,
@@ -40,7 +41,7 @@ export default function UpdateInfoScreen({
       })
       .then(() => {
         Alert.alert("User updated!");
-        navigation.navigate("Home");
+        navigation.navigate("Home", {});
       })
       .catch((error) => {
         Alert.alert("Error", error.response.data.message);

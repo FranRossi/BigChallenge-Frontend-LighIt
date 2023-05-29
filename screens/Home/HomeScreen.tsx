@@ -1,11 +1,13 @@
 import React from "react";
 import { Text, View } from "react-native";
 import type { NativeStackScreenProps } from "@react-navigation/native-stack";
-import HomeStackParamList from "../../constants/navigation/HomeStackParamListProps";
+import DrawerStackParamList from "../../constants/navigation/DrawerParamListProps";
 
-export default function HomeScreen({
-  navigation,
-}: NativeStackScreenProps<HomeStackParamList, "Home">) {
+interface Props {
+  navigation: NativeStackScreenProps<DrawerStackParamList, "Home">;
+}
+
+export default function HomeScreen({ navigation }: Props) {
   return (
     <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
       <Text>Home</Text>
