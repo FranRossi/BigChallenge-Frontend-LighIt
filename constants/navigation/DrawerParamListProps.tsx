@@ -1,5 +1,8 @@
+import { ParamListBase } from "@react-navigation/native";
+
 type DrawerStackParamList = {
-  HomeStack: undefined;
+  Home: ParamListBase;
+  UpdateInfo: ParamListBase;
 };
 
 export default DrawerStackParamList;

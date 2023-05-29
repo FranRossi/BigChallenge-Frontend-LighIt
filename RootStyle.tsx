@@ -19,25 +19,36 @@ const styles = StyleSheet.create({
     backgroundColor: "#0084b3",
   },
   logoutContainer: {
-    height: 60,
+    height: 50,
     alignItems: "center",
     flexDirection: "row",
     backgroundColor: "black",
     marginHorizontal: 10,
     borderRadius: 5,
   },
+  drawerItemListContainer: { flex: 1 },
   userNameAndLogoutView: {
     paddingLeft: 12,
   },
+  userInitialView: {
+    height: 36,
+    width: 36,
+    borderRadius: 18,
+    backgroundColor: "grey",
+    justifyContent: "center",
+    alignItems: "center",
+    marginLeft: 10,
+  },
+  userInitial: { color: "white", fontSize: 16 },
   userName: {
     color: "white",
     fontSize: 14,
+    fontWeight: "bold",
   },
-  logout: {
+  logoutText: {
     color: "white",
     fontSize: 14,
-    fontWeight: "bold",
-    marginTop: 8,
+    marginVertical: 4,
   },
 });
 

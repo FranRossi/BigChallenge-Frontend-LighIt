@@ -6,11 +6,11 @@ import {
   DrawerItemList,
   createDrawerNavigator,
   DrawerContentComponentProps,
+  DrawerItem,
 } from "@react-navigation/drawer";
 import HomeScreen from "./screens/home/HomeScreen";
 import RegisterScreen from "./screens/register/RegisterScreen";
 import type AuthStackParamList from "./constants/navigation/AuthStackParamListProps";
-import type HomeStackParamList from "./constants/navigation/HomeStackParamListProps";
 import type DrawerStackParamList from "./constants/navigation/DrawerParamListProps";
 import { useContext, useEffect, useState } from "react";
 import { AuthContext, AuthContextType } from "./context/AuthProvider";
@@ -19,19 +19,34 @@ import LoginScreen from "./screens/login/LoginScreen";
 import * as SecureStore from "expo-secure-store";
 import { setUserToken } from "./helpers/axios/axiosConfig";
 import styles from "./RootStyle";
+import UpdateInfoScreen from "./screens/updatePatientInfo/UpdateInfoScreen";
+import { Roles } from "./constants/roles/Roles";
 
-const HomeStack = createNativeStackNavigator<HomeStackParamList>();
 const AuthStack = createNativeStackNavigator<AuthStackParamList>();
 const Drawer = createDrawerNavigator<DrawerStackParamList>();
 
-const HomeStackNavigator = () => {
+const DrawerStackNavigator = () => {
   return (
-    <HomeStack.Navigator screenOptions={{ headerShown: false }}>
-      <HomeStack.Screen name="Home" component={HomeScreen} />
-    </HomeStack.Navigator>
+    <Drawer.Navigator
+      initialRouteName="Home"
+      drawerContent={(props) => <DrawerContent {...props} />}
+      screenOptions={{
+        drawerActiveBackgroundColor: "black",
+        drawerActiveTintColor: "white",
+      }}
+    >
+      <Drawer.Screen name="Home" component={HomeScreen} />
+      <Drawer.Screen
+        name="UpdateInfo"
+        component={UpdateInfoScreen}
+        options={{
+          headerTitle: "Update information",
+          title: "Update information",
+        }}
+      />
+    </Drawer.Navigator>
   );
 };
-
 const AuthStackNavigator = () => {
   return (
     <AuthStack.Navigator
@@ -54,17 +69,33 @@ const AuthStackNavigator = () => {
 const DrawerContent = (props: DrawerContentComponentProps) => {
   const { logout, user } = useContext(AuthContext);
 
+  function updateInfoScreen(role: string) {
+    if (role === Roles.PATIENT) {
+      props.navigation.navigate("UpdateInfo");
+    }
+  }
+
   return (
     <DrawerContentScrollView
       contentContainerStyle={styles.contentContainer}
       scrollEnabled={false}
     >
-      <DrawerItemList {...props} />
+      <View style={styles.drawerItemListContainer}>
+        <DrawerItem
+          label="Home"
+          onPress={() => props.navigation.navigate("Home")}
+        />
+      </View>
       <View style={styles.logoutContainer}>
+        <TouchableOpacity onPress={() => updateInfoScreen(user?.role ?? "")}>
+          <View style={styles.userInitialView}>
+            <Text style={styles.userInitial}>{user?.name[0]}</Text>
+          </View>
+        </TouchableOpacity>
         <View style={styles.userNameAndLogoutView}>
           <Text style={styles.userName}>{user?.name}</Text>
           <TouchableOpacity onPress={logout}>
-            <Text style={styles.logout}>Logout</Text>
+            <Text style={styles.logoutText}>Sign out</Text>
           </TouchableOpacity>
         </View>
       </View>
@@ -100,24 +131,8 @@ export default function Root() {
   }
 
   return (
-    <>
-      <NavigationContainer>
-        {user ? (
-          <Drawer.Navigator
-            initialRouteName="HomeStack"
-            drawerContent={(props) => <DrawerContent {...props} />}
-            screenOptions={{
-              drawerActiveBackgroundColor: "black",
-              drawerActiveTintColor: "white",
-              title: "Home",
-            }}
-          >
-            <Drawer.Screen name="HomeStack" component={HomeStackNavigator} />
-          </Drawer.Navigator>
-        ) : (
-          <AuthStackNavigator />
-        )}
-      </NavigationContainer>
-    </>
+    <NavigationContainer>
+      {user ? <DrawerStackNavigator /> : <AuthStackNavigator />}
+    </NavigationContainer>
   );
 }
