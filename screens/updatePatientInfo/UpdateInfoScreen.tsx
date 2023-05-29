@@ -50,9 +50,6 @@ export default function UpdateInfoScreen({ navigation }: Props) {
 
   return (
     <View style={styles.container}>
-      {errors && Object.values(errors)[0] && (
-        <Text style={styles.error}>{Object.values(errors)[0].message}</Text>
-      )}
       <Text style={styles.label}>Phone number</Text>
       <Controller
         control={control}
@@ -67,6 +64,7 @@ export default function UpdateInfoScreen({ navigation }: Props) {
         name="phone"
         rules={{ required: "Phone number is required" }}
       />
+      {errors.phone && <Text style={styles.error}>{errors.phone.message}</Text>}
       <Text style={styles.label}>Weight</Text>
       <Controller
         control={control}
@@ -87,6 +85,9 @@ export default function UpdateInfoScreen({ navigation }: Props) {
           },
         }}
       />
+      {errors.weight && (
+        <Text style={styles.error}>{errors.weight.message}</Text>
+      )}
       <Text style={styles.label}>Height</Text>
       <Controller
         control={control}
@@ -107,6 +108,9 @@ export default function UpdateInfoScreen({ navigation }: Props) {
           },
         }}
       />
+      {errors.height && (
+        <Text style={styles.error}>{errors.height.message}</Text>
+      )}
       <Text style={styles.label}>Other information</Text>
       <Controller
         control={control}
@@ -120,6 +124,9 @@ export default function UpdateInfoScreen({ navigation }: Props) {
         )}
         name="other_info"
       />
+      {errors.other_info && (
+        <Text style={styles.error}>{errors.other_info.message}</Text>
+      )}
 
       <TouchableOpacity
         onPress={handleSubmit(onSubmit)}

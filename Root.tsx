@@ -6,6 +6,7 @@ import {
   DrawerItemList,
   createDrawerNavigator,
   DrawerContentComponentProps,
+  DrawerItem,
 } from "@react-navigation/drawer";
 import HomeScreen from "./screens/home/HomeScreen";
 import RegisterScreen from "./screens/register/RegisterScreen";
@@ -32,7 +33,6 @@ const DrawerStackNavigator = () => {
       screenOptions={{
         drawerActiveBackgroundColor: "black",
         drawerActiveTintColor: "white",
-        headerShown: true,
       }}
     >
       <Drawer.Screen name="Home" component={HomeScreen} />
@@ -40,7 +40,6 @@ const DrawerStackNavigator = () => {
         name="UpdateInfo"
         component={UpdateInfoScreen}
         options={{
-          headerShown: true,
           headerTitle: "Update information",
           title: "Update information",
         }}
@@ -83,7 +82,10 @@ const DrawerContent = (props: DrawerContentComponentProps) => {
       scrollEnabled={false}
     >
       <View style={styles.drawerItemListContainer}>
-        <DrawerItemList {...props} />
+        <DrawerItem
+          label="Home"
+          onPress={() => props.navigation.navigate("Home")}
+        />
       </View>
       <View style={styles.logoutContainer}>
         <TouchableOpacity onPress={updateInfoScreen(user?.role ?? "")}>

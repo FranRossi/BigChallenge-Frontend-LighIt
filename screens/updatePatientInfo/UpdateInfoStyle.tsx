@@ -30,6 +30,8 @@ const styles = StyleSheet.create({
     borderRadius: 4,
   },
   error: {
+    paddingTop: 4,
+    paddingLeft: 4,
     color: "red",
   },
   updateButton: {
